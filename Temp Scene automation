@@ -1,0 +1,31 @@
+trigger:
+  - platform: event
+    event_type: nhl_goal
+    event_data:
+      goal_tracked_team: true
+action:
+  - service: scene.create
+    data_template:
+      scene_id: before
+      snapshot_entities:
+        - light.kitchen_counter_lights
+  - service: light.turn_on
+    data:
+      rgb_color:
+        - 20
+        - 254
+        - 27
+      brightness: 255
+      effect: Flash
+    target:
+      entity_id:
+        - light.kitchen_counter_lights
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: scene.turn_on
+    data: {}
+    target:
+      entity_id: scene.before
